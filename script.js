@@ -173,12 +173,12 @@
   if (!form) return;
 
   form.addEventListener('submit', e => {
-    e.preventDefault();
     const name    = document.getElementById('contact-name').value.trim();
     const email   = document.getElementById('contact-email-input').value.trim();
     const message = document.getElementById('contact-message').value.trim();
 
     if (!name || !email || !message) {
+      e.preventDefault(); // Stop submission only if fields are missing
       // Simple shake animation on empty fields
       [name, email, message].forEach((v, i) => {
         const inputs = ['contact-name','contact-email-input','contact-message'];
@@ -192,19 +192,8 @@
       return;
     }
 
-    // Simulate sending
-    btn.textContent = '⏳ Sending...';
-    btn.disabled    = true;
-    setTimeout(() => {
-      btn.textContent = '✅ Sent!';
-      success.style.display = 'block';
-      form.reset();
-      setTimeout(() => {
-        btn.textContent = 'Send Message';
-        btn.disabled    = false;
-        success.style.display = 'none';
-      }, 5000);
-    }, 1500);
+    // Let the browser handle the POST to formsubmit natively!
+    btn.textContent = '⏳ Redirecting...';
   });
 })();
 
